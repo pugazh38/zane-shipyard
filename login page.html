@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Export Request Form</title>
+  <link rel="icon" type="image/jpg" href="zane shipyard/media/logo.jpg">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transform: perspective(1500px) rotateX(10deg);
+      transition: transform 0.3s;
+    }
+
+    .form-container:hover {
+      transform: perspective(1500px) rotateX(0deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      text-transform: uppercase;
+      font-size: 24px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      font-size: 14px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+      border-color: #4CAF50;
+    }
+
+    .file-upload {
+      padding: 5px;
+      margin: 5px 0;
+    }
+
+    .checkbox {
+      margin-top: 15px;
+    }
+
+    .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    fieldset {
+      border: none;
+      padding: 0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      color: #333;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group input[type="file"] {
+      padding: 6px;
+    }
+
+    .form-group select {
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+
+    .form-group select option {
+      background-color: white;
+    }
+
+    .form-group input[type="radio"] {
+      margin-right: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Stock Export Request</h1>
+    <form id="exportForm">
+      <!-- User & Company Details -->
+      <fieldset>
+        <legend>User & Company Details</legend>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-group">
+          <label for="companyName">Company Name</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-group">
+          <label for="contactNumber">Contact Number</label>
+          <input type="tel" id="contactNumber" name="contactNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+      </fieldset>
+
+      <!-- Stock Details -->
+      <fieldset>
+        <legend>Stock Details</legend>
+        <div class="form-group">
+          <label for="stockName">Stock Name</label>
+          <input type="text" id="stockName" name="stockName" required>
+        </div>
+        <div class="form-group">
+          <label for="stockCategory">Stock Category</label>
+          <select id="stockCategory" name="stockCategory" required>
+            <option value="machinery">Machinery</option>
+            <option value="spare_parts">Spare Parts</option>
+            <option value="raw_materials">Raw Materials</option>
+            <option value="containers">Containers</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockQuantity">Stock Quantity</label>
+          <input type="number" id="stockQuantity" name="stockQuantity" required>
+          <select id="quantityUnit" name="quantityUnit" required>
+            <option value="kg">kg</option>
+            <option value="tons">tons</option>
+            <option value="units">units</option>
+            <option value="liters">liters</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockValue">Stock Value (₹ / $)</label>
+          <input type="number" id="stockValue" name="stockValue" required>
+        </div>
+        <div class="form-group">
+          <label for="stockCondition">Stock Condition</label>
+          <select id="stockCondition" name="stockCondition" required>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+            <option value="refurbished">Refurbished</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockImages">Upload Stock Images</label>
+          <input type="file" id="stockImages" name="stockImages[]" multiple class="file-upload">
+        </div>
+      </fieldset>
+
+      <!-- Export Destination & Shipping Details -->
+      <fieldset>
+        <legend>Export Destination & Shipping Details</legend>
+        <div class="form-group">
+          <label for="destinationCountry">Destination Country</label>
+          <select id="destinationCountry" name="destinationCountry" required>
+            <option value="India">India</option>
+            <option value="Singapore">Singapore</option>
+            <option value="USA">USA</option>
+            <!-- Add more countries here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="destinationPort">Destination Port</label>
+          <input type="text" id="destinationPort" name="destinationPort" required>
+        </div>
+        <div class="form-group">
+          <label for="expectedDeliveryDate">Expected Delivery Date</label>
+          <input type="date" id="expectedDeliveryDate" name="expectedDeliveryDate" required>
+        </div>
+        <div class="form-group">
+          <label for="modeOfTransport">Mode of Transport</label>
+          <select id="modeOfTransport" name="modeOfTransport" required>
+            <option value="ship">Ship</option>
+            <option value="air">Air</option>
+            <option value="rail">Rail</option>
+            <option value="road">Road</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="warehouseLocation">Warehouse Location</label>
+          <select id="warehouseLocation" name="warehouseLocation" required>
+            <option value="shipyardA">Shipyard A</option>
+            <option value="shipyardB">Shipyard B</option>
+            <option value="shipyardC">Shipyard C</option>
+            <!-- Add more shipyard locations here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="shippingPartner">Shipping Partner</label>
+          <input type="text" id="shippingPartner" name="shippingPartner">
+        </div>
+      </fieldset>
+
+      <!-- Export Compliance & Customs Details -->
+      <fieldset>
+        <legend>Export Compliance & Customs Details</legend>
+        <div class="form-group">
+          <label for="exportLicense">Required Export License?</label>
+          <input type="radio" id="licenseYes" name="exportLicense" value="Yes"> Yes
+          <input type="radio" id="licenseNo" name="exportLicense" value="No" checked> No
+        </div>
+        <div class="form-group">
+          <label for="customsDeclaration">Customs Declaration Form Upload</label>
+          <input type="file" id="customsDeclaration" name="customsDeclaration" class="file-upload">
+        </div>
+        <div class="form-group">
+          <label for="specialHandling">Any Special Handling Instructions?</label>
+          <textarea id="specialHandling" name="specialHandling" rows="4"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- Payment & Insurance Details -->
+      <fieldset>
+        <legend>Payment & Insurance Details</legend>
+        <div class="form-group">
+          <label for="paymentMode">Payment Mode</label>
+          <select id="paymentMode" name="paymentMode" required>
+            <option value="onlinePayment">Online Payment</option>
+            <option value="bankTransfer">Bank Transfer</option>
+            <option value="letterOfCredit">Letter of Credit</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="insuranceRequired">Insurance Required?</label>
+          <input type="radio" id="insuranceYes" name="insuranceRequired" value="Yes"> Yes
+          <input type="radio" id="insuranceNo" name="insuranceRequired" value="No" checked> No
+        </div>
+        <div class="form-group">
+          <label for="insuranceDocuments">Upload Insurance Documents</label>
+          <input type="file" id="insuranceDocuments" name="insuranceDocuments" class="file-upload">
+        </div>
+      </fieldset>
+
+      <!-- Terms & Confirmation -->
+      <div class="checkbox">
+        <input type="checkbox" id="confirmDetails" name="confirmDetails" required>
+        <label for="confirmDetails">I confirm that all the details provided are accurate and comply with export regulations.</label>
+      </div>
+      
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("exportForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Your request has been submitted successfully! A tracking ID will be generated.");
+      // You can add further submission logic to your backend here.
+    });
+  </script>
+
+</body>
+</html>

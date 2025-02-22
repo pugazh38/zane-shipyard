@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilance Page</title>
+    <link rel="icon" type="image/jpg" href="zane shipyard/media/logo.jpg">
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #112240;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background-color: #112240;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .header:hover {
+            transform: rotateY(15deg) rotateX(15deg);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #333;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+
+        /* 3D Card Style for Sections */
+        .vigilance-section, .faq-section {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+        }
+
+        .vigilance-section:hover, .faq-section:hover {
+            transform: rotateY(15deg) rotateX(15deg) scale(1.05);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .vigilance-contact {
+            margin-top: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .form-submit:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+        }
+
+        .faq-item h4 {
+            font-size: 18px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item h4:hover {
+            color: #4CAF50;
+        }
+
+        .faq-item p {
+            color: #555;
+        }
+
+        /* Animation for Form Elements */
+        .form-container {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .form-container.show {
+            display: block;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Shipyard Vigilance Page</h1>
+    </div>
+
+    <!-- Vigilance Guidelines Section -->
+    <div class="vigilance-section">
+        <h2 class="section-title">Vigilance Guidelines</h2>
+        <p>The Vigilance Department plays a crucial role in ensuring ethical practices within the shipyard. Its key responsibilities include maintaining transparency, preventing corruption and fraud, and ensuring a safe working environment for all employees and stakeholders.</p>
+        <p>We encourage everyone to adhere to the highest ethical standards, and we provide guidelines for the prevention of fraud, corruption, and unethical behavior in our operations. If you encounter any issues, please feel free to report them through the grievance form below or directly contact our vigilance officers.</p>
+
+        <h3>Contact Vigilance Officers</h3>
+        <p>If you have any concerns, you can reach out to the following vigilance officers:</p>
+        <ul>
+            <li><strong>John Doe</strong> - Chief Vigilance Officer - Email: john.doe@shipyard.com</li>
+            <li><strong>Jane Smith</strong> - Senior Officer - Email: jane.smith@shipyard.com</li>
+        </ul>
+    </div>
+
+    <!-- Report an Issue Section -->
+    <div class="vigilance-section">
+        <h2 class="section-title">Report an Issue (Grievance Form)</h2>
+        <form id="grievanceForm" class="form-container">
+            <input type="text" id="name" class="form-input" placeholder="Your Name (Optional)">
+            <input type="email" id="contact" class="form-input" placeholder="Your Contact Details (Optional)">
+            
+            <label for="complaintType">Type of Complaint:</label>
+            <select id="complaintType" class="form-input">
+                <option value="fraud">Fraudulent Activities</option>
+                <option value="corruption">Corruption</option>
+                <option value="safety">Safety Violations</option>
+                <option value="harassment">Harassment / Misconduct</option>
+            </select>
+            
+            <textarea id="description" class="form-input" placeholder="Detailed Description" rows="4" required></textarea>
+            <input type="file" id="evidence" class="form-input" accept=".pdf, .jpg, .jpeg, .png" placeholder="Attach Evidence" required>
+            
+            <button type="submit" class="form-submit">Submit Complaint</button>
+        </form>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions (FAQs)</h2>
+        
+        <div class="faq-item">
+            <h4>1. What happens after I report an issue?</h4>
+            <p>Once you report an issue, our vigilance team will review it and take the necessary actions. We aim to resolve most issues within 7-10 business days.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>2. Is my complaint confidential?</h4>
+            <p>Yes, all complaints are handled confidentially. You can choose to remain anonymous if you prefer.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>3. How can I contact the vigilance team directly?</h4>
+            <p>You can contact the vigilance officers via email, as listed in the guidelines above.</p>
+        </div>
+    </div>
+
+    <script>
+        // Grievance Form Submission (Data should be securely stored in a database)
+        document.getElementById("grievanceForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const contact = document.getElementById("contact").value;
+            const complaintType = document.getElementById("complaintType").value;
+            const description = document.getElementById("description").value;
+            const evidence = document.getElementById("evidence").files[0];
+
+            // Normally, here you'd store the data in a database or send it to a server
+            alert(`Complaint submitted successfully! Type: ${complaintType}, Description: ${description}`);
+        });
+
+        // Show the grievance form with animation
+        function showGrievanceForm() {
+            document.getElementById("grievanceForm").classList.add("show");
+        }
+
+        // Optionally, you can trigger this function via a button click or other event
+        // showGrievanceForm();
+    </script>
+
+</body>
+</html>
