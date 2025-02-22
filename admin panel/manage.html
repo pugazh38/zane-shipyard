@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Ship Management</title>
+    <style>
+        /* General Layout */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #0077b6;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Button */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #0077b6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #00b4d8;
+            transform: scale(1.05);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Form */
+        .ship-form {
+            display: none;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #0077b6;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+            outline: none;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        table th {
+            background: #0077b6;
+            color: white;
+            padding: 1rem;
+        }
+
+        table td {
+            background: white;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-docked { background: #28a745; }
+        .status-transit { background: #ffc107; }
+        .status-maintenance { background: #dc3545; }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 1rem 1.5rem;
+            background: #0077b6;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-10px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            width: 100%;
+            border: 1px solid #0077b6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🚢 Ship Management System</h1>
+        <button class="btn btn-primary" onclick="toggleShipForm()">+ Add New Ship</button>
+    </div>
+
+    <input type="text" class="search-bar" id="searchInput" placeholder="🔍 Search ships..." onkeyup="searchShips()">
+
+    <div class="ship-form" id="shipForm">
+        <h2>Ship Details</h2>
+        <form id="shipDetailsForm" onsubmit="handleShipSubmit(event)">
+            <div class="form-group">
+                <label>Ship Name</label>
+                <input type="text" class="form-control" id="shipName" required>
+            </div>
+            <div class="form-group">
+                <label>Ship Type</label>
+                <select class="form-control" id="shipType" required>
+                    <option value="">Select Type</option>
+                    <option value="Cargo">Cargo</option>
+                    <option value="Tanker">Tanker</option>
+                    <option value="Container">Container</option>
+                    <option value="Cruise">Cruise</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" id="shipStatus" required>
+                    <option value="">Select Status</option>
+                    <option value="Docked">Docked</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Last Port</label>
+                <input type="text" class="form-control" id="lastPort">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Save Ship</button>
+                <button type="button" class="btn btn-danger" onclick="toggleShipForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Last Port</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="shipList"></tbody>
+    </table>
+
+    <div id="toast" class="toast"></div>
+</div>
+
+<script>
+    let currentEditingId = null;
+    const ships = [];
+
+    function toggleShipForm() {
+        const form = document.getElementById('shipForm');
+        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        if (!form.style.display || form.style.display === 'none') {
+            currentEditingId = null;
+            document.getElementById('shipDetailsForm').reset();
+        }
+    }
+
+    function handleShipSubmit(e) {
+        e.preventDefault();
+        const shipData = {
+            id: currentEditingId || Date.now(),
+            name: document.getElementById('shipName').value,
+            type: document.getElementById('shipType').value,
+            status: document.getElementById('shipStatus').value,
+            lastPort: document.getElementById('lastPort').value
+        };
+
+        if (currentEditingId) {
+            const index = ships.findIndex(s => s.id === currentEditingId);
+            ships[index] = shipData;
+            showToast('Ship updated successfully!');
+        } else {
+            ships.push(shipData);
+            showToast('New ship added!');
+        }
+
+        renderShips();
+        toggleShipForm();
+    }
+
+    function editShip(id) {
+        currentEditingId = id;
+        const ship = ships.find(s => s.id === id);
+        document.getElementById('shipName').value = ship.name;
+        document.getElementById('shipType').value = ship.type;
+        document.getElementById('shipStatus').value = ship.status;
+        document.getElementById('lastPort').value = ship.lastPort;
+        toggleShipForm();
+    }
+
+    function deleteShip(id) {
+        if (confirm('Are you sure you want to delete this ship?')) {
+            const index = ships.findIndex(s => s.id === id);
+            ships.splice(index, 1);
+            renderShips();
+            showToast('Ship deleted successfully!');
+        }
+    }
+
+    function renderShips() {
+        const tbody = document.getElementById('shipList');
+        tbody.innerHTML = ships.map(ship => `
+            <tr>
+                <td>${ship.name}</td>
+                <td>${ship.type}</td>
+                <td>
+                    <span class="status-indicator ${getStatusClass(ship.status)}"></span>
+                    ${ship.status}
+                </td>
+                <td>${ship.lastPort || '-'}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editShip(${ship.id})">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteShip(${ship.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function getStatusClass(status) {
+        return {
+            'Docked': 'status-docked',
+            'In Transit': 'status-transit',
+            'Maintenance': 'status-maintenance'
+        }[status];
+    }
+
+    function searchShips() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        document.querySelectorAll('#shipList tr').forEach(row => {
+            const shipName = row.cells[0].innerText.toLowerCase();
+            row.style.display = shipName.includes(query) ? '' : 'none';
+        });
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
+    }
+
+    renderShips();
+</script>
+
+</body>
+</html>

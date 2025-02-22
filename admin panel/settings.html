@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Control Center</title>
+    <style>
+        /* 3D Settings Container */
+        .settings-panel {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-left: 320px;
+            transform-style: preserve-3d;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            backdrop-filter: blur(20px);
+            min-height: 80vh;
+            perspective: 1000px;
+        }
+
+        /* Holographic Control Cards */
+        .control-card {
+            background: linear-gradient(145deg, 
+                rgba(0, 119, 182, 0.2) 0%, 
+                rgba(0, 180, 216, 0.1) 100%);
+            border: 2px solid rgba(0, 180, 216, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transform: translateZ(20px);
+            transition: all 0.3s ease;
+        }
+
+        .control-card:hover {
+            transform: translateZ(40px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 0 20px 40px rgba(0,180,216,0.2);
+        }
+
+        /* 3D Form Elements */
+        .setting-item {
+            margin-bottom: 1.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #00b4d8;
+            text-shadow: 0 0 10px rgba(0,180,216,0.3);
+        }
+
+        /* Holographic Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            transform-style: preserve-3d;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            transition: .4s;
+            border-radius: 34px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid #00b4d8;
+        }
+
+        .toggle-slider:before {
+            content: "";
+            position: absolute;
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 2px;
+            background: #00b4d8;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0,180,216,0.5);
+        }
+
+        input:checked + .toggle-slider {
+            background: rgba(0,180,216,0.3);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px) translateZ(10px);
+        }
+
+        /* Depth Slider */
+        .depth-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+            border: 2px solid #00b4d8;
+            box-shadow: 0 0 15px rgba(0,180,216,0.2);
+        }
+
+        .depth-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #00b4d8;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0,180,216,0.5);
+            transform: translateZ(20px);
+        }
+
+        /* 3D Theme Selector */
+        .theme-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .theme-option {
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            transform: translateZ(20px);
+            box-shadow: 0 10px 20px rgba(0,180,216,0.3);
+        }
+
+        .theme-option.active {
+            border-color: #00b4d8;
+            box-shadow: 0 0 30px rgba(0,180,216,0.5);
+            transform: translateZ(30px);
+        }
+
+        /* Cyber Security Shield */
+        .security-shield {
+            position: relative;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(255,50,50,0.1);
+            border: 2px solid #ff3232;
+            transform-style: preserve-3d;
+            animation: pulseWarning 2s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,50,50,0.2); }
+            50% { box-shadow: 0 0 30px rgba(255,50,50,0.4); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Reuse header and sidebar from previous code -->
+    
+    <div class="settings-panel">
+        <div class="control-card">
+            <h2>System Preferences</h2>
+            
+            <div class="setting-item">
+                <label class="setting-label">3D Intensity</label>
+                <input type="range" class="depth-slider" id="depthControl" min="0" max="100" value="50">
+            </div>
+
+            <div class="setting-item">
+                <label class="setting-label">Holographic UI</label>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="control-card">
+            <h2>Visual Theme</h2>
+            <div class="theme-selector">
+                <div class="theme-option active" style="background: rgba(0,119,182,0.3)" onclick="changeTheme('ocean')">
+                    <h3>Ocean Depth</h3>
+                    <p>Blue spectrum theme</p>
+                </div>
+                <div class="theme-option" style="background: rgba(50,50,50,0.3)" onclick="changeTheme('matrix')">
+                    <h3>Digital Matrix</h3>
+                    <p>Cyber green theme</p>
+                </div>
+                <div class="theme-option" style="background: rgba(255,100,0,0.3)" onclick="changeTheme('sunset')">
+                    <h3>Neon Sunset</h3>
+                    <p>Violet-orange theme</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-card security-shield">
+            <h2>Security Protocol</h2>
+            <div class="setting-item">
+                <label class="setting-label">Firewall Protection</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 3D Intensity Control
+        const depthSlider = document.getElementById('depthControl');
+        depthSlider.addEventListener('input', (e) => {
+            const intensity = e.target.value / 100;
+            document.body.style.perspective = `${1000 + (intensity * 2000)}px`;
+            document.querySelectorAll('.control-card').forEach(card => {
+                card.style.transform = `translateZ(${intensity * 40}px)`;
+            });
+        });
+
+        // Theme Management
+        function changeTheme(theme) {
+            document.querySelectorAll('.theme-option').forEach(opt => 
+                opt.classList.remove('active'));
+            event.target.closest('.theme-option').classList.add('active');
+
+            switch(theme) {
+                case 'ocean':
+                    document.documentElement.style.setProperty('--primary-color', '#00b4d8');
+                    break;
+                case 'matrix':
+                    document.documentElement.style.setProperty('--primary-color', '#00ff88');
+                    break;
+                case 'sunset':
+                    document.documentElement.style.setProperty('--primary-color', '#ff6b6b');
+                    break;
+            }
+        }
+
+        // Dynamic Depth Adjustment
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.control-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.transform = `
+                    rotateX(${(y - rect.height/2)/20}deg)
+                    rotateY(${-(x - rect.width/2)/20}deg)
+                    translateZ(${depthSlider.value/3}px)
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

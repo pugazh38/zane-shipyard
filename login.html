@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Create Account</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .container:hover {
+            transform: perspective(1000px) rotateY(10deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-link {
+            color: #007bff;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* Hide forms initially */
+        #signup-form {
+            display: none;
+        }
+
+        /* 3D Animation for Container */
+        @keyframes float {
+            0%, 100% {
+                transform: perspective(1000px) rotateY(0deg) translateY(0);
+            }
+            50% {
+                transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+            }
+        }
+
+        .container {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1 id="form-title">Login</h1>
+
+            <!-- Login Form -->
+            <form id="login-form" aria-label="Login Form">
+                <input type="email" id="email" placeholder="Email" required autocomplete="email">
+                <input type="password" id="password" placeholder="Password" required autocomplete="current-password" minlength="6">
+                <li><a href="C:\Users\Balaj\Downloads\zane shipyard\3D-animated-website-master\login page.html">Login</a></li>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" aria-label="Signup Form">
+                <input type="text" id="new-name" placeholder="Full Name" required autocomplete="name">
+                <input type="email" id="new-email" placeholder="Email" required autocomplete="email">
+                <input type="password" id="new-password" placeholder="Password" required autocomplete="new-password" minlength="6">
+                <button type="submit">Create Account</button>
+            </form>
+
+            <!-- Toggle Link -->
+            <span class="toggle-link" id="toggle-link" role="button" tabindex="0">Don't have an account? Create one</span>
+        </div>
+    </main>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById("login-form");
+        const signupForm = document.getElementById("signup-form");
+        const toggleLink = document.getElementById("toggle-link");
+        const formTitle = document.getElementById("form-title");
+
+        // Toggle between Login and Signup forms
+        toggleLink.addEventListener("click", () => {
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                formTitle.innerText = "Login";
+                toggleLink.innerText = "Don't have an account? Create one";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                formTitle.innerText = "Create Account";
+                toggleLink.innerText = "Already have an account? Login";
+            }
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            alert(`Login successful!\nEmail: ${email}`);
+        });
+
+        // Signup Form Submission
+        signupForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("new-name").value;
+            const email = document.getElementById("new-email").value;
+            const password = document.getElementById("new-password").value;
+            alert(`Account created successfully!\nName: ${name}\nEmail: ${email}`);
+        });
+    </script>
+</body>
+</html>

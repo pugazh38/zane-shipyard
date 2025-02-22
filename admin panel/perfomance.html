@@ -1,0 +1,232 @@
+<div class="main-content">
+    <div class="analytics-grid">
+        <!-- Key Metrics -->
+        <div class="analytics-card main-metrics">
+            <h2>Performance Overview</h2>
+            <div class="metric-grid">
+                <div class="metric-item">
+                    <div class="metric-value">78.9%</div>
+                    <div class="metric-label">Fuel Efficiency</div>
+                    <div class="metric-trend positive">▲ 5.2%</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">24.6kts</div>
+                    <div class="metric-label">Avg Speed</div>
+                    <div class="metric-trend neutral">→ 0.3%</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">92h</div>
+                    <div class="metric-label">Voyage Duration</div>
+                    <div class="metric-trend negative">▼ 2.1%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chart -->
+        <div class="analytics-card chart-container">
+            <canvas id="voyageTrendChart"></canvas>
+        </div>
+
+        <!-- Comparative Analysis -->
+        <div class="analytics-card comparison-grid">
+            <h3>Vessel Performance Comparison</h3>
+            <canvas id="vesselComparisonChart"></canvas>
+        </div>
+
+        <!-- Efficiency Distribution -->
+        <div class="analytics-card efficiency-card">
+            <h3>Fuel Consumption Distribution</h3>
+            <div class="gauge-container">
+                <canvas id="fuelGaugeChart"></canvas>
+                <div class="gauge-label">Optimal Range</div>
+            </div>
+        </div>
+
+        <!-- Performance Matrix -->
+        <div class="analytics-card performance-matrix">
+            <h3>Operational Matrix</h3>
+            <canvas id="performanceScatter"></canvas>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Performance Analytics Styles */
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        perspective: 2000px;
+    }
+
+    .analytics-card {
+        background: linear-gradient(145deg, #e0f7fa, #ffffff);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        transition: transform 0.5s, box-shadow 0.5s;
+        transform-style: preserve-3d;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .analytics-card:hover {
+        transform: translateY(-10px) rotateX(10deg) rotateY(5deg) scale(1.03);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(145deg, #d1f3f6, #ffffff);
+    }
+
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .metric-item {
+        padding: 1.5rem;
+        background: linear-gradient(145deg, #e6f7ff, #ffffff);
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s;
+    }
+
+    .metric-item:hover {
+        transform: scale(1.05) rotateY(10deg);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .metric-value {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #0077b6;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .positive { color: #4CAF50; }
+    .negative { color: #f44336; }
+    .neutral { color: #FFC107; }
+
+    .gauge-container {
+        position: relative;
+        margin: 2rem auto;
+        width: 80%;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .gauge-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: bold;
+        color: #0077b6;
+    }
+
+    .performance-matrix {
+        grid-column: span 2;
+    }
+</style>
+
+<script>
+    // Voyage Trend Chart (Line)
+    const voyageTrendChart = new Chart(document.getElementById('voyageTrendChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Voyage Efficiency',
+                data: [65, 59, 80, 81, 76, 85],
+                borderColor: '#0077b6',
+                borderWidth: 4,
+                tension: 0.4,
+                fill: true,
+                backgroundColor: 'rgba(0, 180, 216, 0.2)',
+                pointStyle: 'rectRounded',
+                pointRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            animation: { duration: 2000, easing: 'easeInOutBounce' },
+            plugins: { title: { display: true, text: 'Monthly Efficiency Trend' } }
+        }
+    });
+
+    // Vessel Comparison Chart (Bar)
+    new Chart(document.getElementById('vesselComparisonChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Tanker A', 'Cargo B', 'Container C', 'Special D'],
+            datasets: [{
+                label: 'Performance Index',
+                data: [85, 78, 92, 68],
+                backgroundColor: ['#0077b6', '#00b4d8', '#023e8a', '#90e0ef'],
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    // Fuel Gauge Chart (Doughnut)
+    new Chart(document.getElementById('fuelGaugeChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Optimal', 'Excess'],
+            datasets: [{
+                data: [78, 22],
+                backgroundColor: ['#4CAF50', '#f44336'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            circumference: 270,
+            rotation: -135,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Performance Scatter Chart
+    new Chart(document.getElementById('performanceScatter'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Vessel Performance',
+                data: [
+                    { x: 20, y: 80 }, { x: 25, y: 75 },
+                    { x: 30, y: 90 }, { x: 22, y: 85 },
+                    { x: 28, y: 78 }, { x: 24, y: 88 }
+                ],
+                backgroundColor: '#0077b6',
+                pointRadius: 8,
+                pointHoverRadius: 12,
+                animation: { duration: 2000, easing: 'easeOutBounce' }
+            }]
+        },
+        options: {
+            scales: {
+                x: { title: { display: true, text: 'Speed (knots)' } },
+                y: { title: { display: true, text: 'Efficiency (%)' } }
+            }
+        }
+    });
+
+    // Dynamic Data Updates
+    setInterval(() => {
+        voyageTrendChart.data.datasets[0].data = voyageTrendChart.data.datasets[0].data.map(() =>
+            Math.floor(Math.random() * 100)
+        );
+        voyageTrendChart.update();
+    }, 5000);
+</script>
